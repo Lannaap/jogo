@@ -16,19 +16,20 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, mySprite, 50, 50)
+        `, mySprite, 100, 0)
 })
 info.onScore(50, function () {
     game.gameOver(true)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     projectile.follow(mySprite3)
-    sprites.destroy(mySprite3)
-    sprites.destroy(projectile)
+    sprites.destroy(mySprite3, effects.fire, 500)
+    sprites.destroy(projectile, effects.spray, 500)
     info.changeScoreBy(1)
+    info.changeLifeBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    info.changeLifeBy(-6e-7)
+    info.changeLifeBy(-0.000006)
 })
 let mySprite3: Sprite = null
 let projectile: Sprite = null
@@ -181,7 +182,7 @@ scene.setBackgroundImage(img`
 mySprite.setStayInScreen(true)
 controller.moveSprite(mySprite)
 music.play(music.createSong(hex`005a0004080200`), music.PlaybackMode.UntilDone)
-game.onUpdateInterval(2000, function () {
+game.onUpdateInterval(1000, function () {
     mySprite3 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
